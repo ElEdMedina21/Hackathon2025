@@ -1,62 +1,71 @@
-import React, { useEffect, useState } from "react";
-import { Line } from "react-chartjs-2";
-import axios from "axios";
-import { Chart as ChartJS, LineElement, CategoryScale, LinearScale, PointElement } from "chart.js";
-
-ChartJS.register(LineElement, CategoryScale, LinearScale, PointElement);
+import React, { useState, useEffect, useRef } from "react";
+import Chart from "react-apexcharts";
 
 const ConsumoActual = () => {
-    const [data, setData] = useState([]);
+  const XAXISRANGE = 10000;
+  const API_URL = "https://nxnsmxw7-8000.usw3.devtunnels.ms/article_consume/";
+  const dataRef = useRef([]);
+  const [data, setData] = useState([]);
+  const [yMin, setYMin] = useState(0);
+  const [yMax, setYMax] = useState(100);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get("https://nxnsmxw7-8000.usw3.devtunnels.ms/article_consume/");
-                console.log("API Response:", response.data);
-
-                const newValue = response.data.data[0] || 0; 
-
-                setData(prev => [...prev.slice(-19), newValue]);
-            } catch (error) {
-                console.error("Error fetching data:", error);
-            }
-        };
-
-        const interval = setInterval(fetchData, 250);
-
-        return () => clearInterval(interval);
-    }, []);
-
-    const chartData = {
-        labels: data.map((_, i) => i),
-        datasets: [{
-            label: "Consumo de Energía (kW)",
-            data: data,
-            borderColor: "red",
-            backgroundColor: "rgba(255, 0, 0, 0.2)",
-            fill: true,
-            tension: 0.3,
-            pointRadius: 0
-        }]
-    };
-
-    const options = {
-        responsive: true,
-        scales: {
-            x: { display: false },
-            y: {
-                beginAtZero: true,
-                min: Math.min(...data) - 10,
-                max: Math.max(...data) + 10
-            }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const result = await response.json();
+        const newDate = new Date().getTime();
+        const newPoint = { x: newDate, y: result.data[0] };
+        
+        dataRef.current.push(newPoint);
+        while (dataRef.current.length > 0 && newDate - dataRef.current[0].x > XAXISRANGE) {
+          dataRef.current.shift();
         }
+
+        setData([...dataRef.current]);
+
+        const values = dataRef.current.map(point => point.y);
+        setYMin(Math.min(...values) - 5);
+        setYMax(Math.max(...values) + 5);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
 
-    return (
-        <div>
-            <Line data={chartData} options={options} />
-        </div>
-    );
+    const interval = setInterval(fetchData, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const options = {
+    chart: {
+      id: "realtime",
+      height: 350,
+      type: "line",
+      animations: {
+        enabled: false,
+      },
+      toolbar: { show: false },
+      zoom: { enabled: false },
+      redrawOnParentResize: false,
+    },
+    dataLabels: { enabled: false },
+    stroke: { curve: "smooth" },
+    title: { text: "Dynamic Updating Chart", align: "left" },
+    markers: { size: 0 },
+    xaxis: {
+      type: "datetime",
+      range: XAXISRANGE,
+      tickAmount: 6,
+    },
+    yaxis: {
+      min: yMin,
+      max: yMax,
+    },
+    legend: { show: false },
+    series: [{ data }],
+  };
+
+  return <Chart options={options} series={options.series} type="line"/>;
 };
 
 export default ConsumoActual;
