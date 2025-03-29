@@ -30,7 +30,7 @@ const GraficaPastel = () => {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 1000); // Actualiza cada 5 segundos
+        const interval = setInterval(fetchData, 1000);
 
         return () => clearInterval(interval);
     }, [fetchData]);

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback, useMemo } from "react"
 import Chart from "react-apexcharts";
 
 const ConsumoActual = () => {
-  const XAXISRANGE = 10000;
+  const XAXISRANGE = 20000;
   const API_URL = "https://nxnsmxw7-8000.usw3.devtunnels.ms/article_consume/";
   const dataRef = useRef([]);
   const [data, setData] = useState([]);
