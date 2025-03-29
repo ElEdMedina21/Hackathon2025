@@ -16,15 +16,18 @@ const ConsumoActual = () => {
         const result = await response.json();
         const newDate = new Date().getTime();
         const newPoint = { x: newDate, y: result.data[0] };
-        
+
         dataRef.current.push(newPoint);
-        while (dataRef.current.length > 0 && newDate - dataRef.current[0].x > XAXISRANGE) {
+        while (
+          dataRef.current.length > 0 &&
+          newDate - dataRef.current[0].x > XAXISRANGE
+        ) {
           dataRef.current.shift();
         }
 
         setData([...dataRef.current]);
 
-        const values = dataRef.current.map(point => point.y);
+        const values = dataRef.current.map((point) => point.y);
         setYMin(Math.min(...values) - 5);
         setYMax(Math.max(...values) + 5);
       } catch (error) {
@@ -65,7 +68,13 @@ const ConsumoActual = () => {
     series: [{ data }],
   };
 
-  return <Chart options={options} series={options.series} type="line"/>;
+  return (
+    <div className="flex justify-center items-center p-4">
+      <div className="w-full max-w-md h-80 bg-white shadow-md rounded-lg p-4">
+        <Chart options={options} series={options.series} type="line" />
+      </div>
+    </div>
+  );
 };
 
 export default ConsumoActual;

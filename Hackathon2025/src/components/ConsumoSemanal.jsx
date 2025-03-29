@@ -35,19 +35,12 @@ const ConsumoSemanal = () => {
             label: "Consumo de Energía (kW)",
             data: values,
             backgroundColor: values.map((value, index) => {
-                // Nueva paleta de colores vibrantes
                 const colors = [
-                    "#FF6384", // Rosa
-                    "#36A2EB", // Azul
-                    "#FFCE56", // Amarillo
-                    "#4BC0C0", // Turquesa
-                    "#9966FF", // Morado
-                    "#FF9F40", // Naranja
-                    "#E7E9ED"  // Gris claro
+                    "#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF", "#FF9F40", "#E7E9ED"
                 ];
-                return colors[index % colors.length]; // Cicla los colores si hay más datos
+                return colors[index % colors.length];
             }),
-            borderColor: "#FFFFFF", // Blanco para contornos
+            borderColor: "#FFFFFF",
             borderWidth: 2
         }]
     };
@@ -57,39 +50,31 @@ const ConsumoSemanal = () => {
         scales: {
             y: {
                 beginAtZero: true,
-                ticks: {
-                    color: "#333333" // Gris oscuro para etiquetas
-                },
-                grid: {
-                    color: "#CCCCCC" // Gris claro para líneas de la cuadrícula
-                }
+                ticks: { color: "#333333" },
+                grid: { color: "#CCCCCC" }
             },
             x: {
-                ticks: {
-                    color: "#333333" // Gris oscuro para etiquetas
-                },
-                grid: {
-                    color: "#CCCCCC" // Gris claro para líneas de la cuadrícula
-                }
+                ticks: { color: "#333333" },
+                grid: { color: "#CCCCCC" }
             }
         },
         plugins: {
-            legend: {
-                display: false // Oculta las leyendas
-            },
+            legend: { display: false },
             tooltip: {
-                backgroundColor: "#FFFFFF", // Fondo blanco para el tooltip
-                titleColor: "#000000", // Negro para el título del tooltip
-                bodyColor: "#000000", // Negro para el contenido del tooltip
-                borderColor: "#CCCCCC", // Borde gris claro
+                backgroundColor: "#FFFFFF",
+                titleColor: "#000000",
+                bodyColor: "#000000",
+                borderColor: "#CCCCCC",
                 borderWidth: 1
             }
         }
     };
 
     return (
-        <div>
-            <Bar data={chartData} options={options} />
+        <div className="flex justify-center items-center p-4">
+            <div className="w-full max-w-md h-80 bg-white shadow-md rounded-lg p-4">
+                <Bar data={chartData} options={options} />
+            </div>
         </div>
     );
 };
