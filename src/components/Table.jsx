@@ -7,6 +7,8 @@ const [currentRoom, setRoom] = useState(0);
 const [isOpen, setOpen] = useState(false);
 const [openRow, setRow] = useState(null);
 const [toggles, setToggles] = useState([true,true,true,true,true,true,true,true,true,true,false]);
+const [isLoading, setLoading] = useState('')
+const [recommendation, setRecommendation] = useState('')
 const url = "https://nxnsmxw7-8000.usw3.devtunnels.ms/";
 
 const fetchData = async () => {
@@ -38,6 +40,13 @@ setToggles((prevToggles) => ({
     [id]: !prevToggles[id],
 }));
 };
+
+const handleRec = ()=>{
+    setLoading('Loading')
+    setTimeout(()=>{
+        setLoading('false')
+    }, 1500)
+}
 
 return (
 <>
@@ -130,21 +139,32 @@ return (
         </table>
         {isOpen && openRow && (
             <div className="fixed inset-0 flex items-center justify-center bg-black/75">
-            <div className="bg-[#FBFFE4] p-6 rounded-lg shadow-lg w-[50%]">
-                <h2 className="text-xl font-bold text-center">{openRow.name}</h2>
-                <p className="mt-2 text-gray-600">
-                <b>Consumo Actual:</b> {openRow.consumo_actual} KW
-                </p>
-                <p className="text-gray-600">
-                <b>Consumo Estimado Mensual:</b> {openRow.consumo_estimado_mensual} KW
-                </p>
-                <p className="mt-2">{openRow.analisis_text}</p>
-                <div className="flex w-full justify-center items-center">
-                <button onClick={() => setOpen(false)} className="mt-4 px-4 py-2 cursor-pointer bg-red-500 text-white rounded-md hover:bg-red-700">
-                    Cerrar
-                </button>
-                </div>
-            </div>
+                {!isLoading && (
+                    <div className="bg-[#FBFFE4] p-6 rounded-lg shadow-lg w-[50%]">
+                        <h2 className="text-xl font-bold text-center">{openRow.name}</h2>
+                        <p className="mt-2 text-gray-600">
+                        <b>Consumo Actual:</b> {openRow.consumo_actual} KW
+                        </p>
+                        <p className="text-gray-600">
+                        <b>Consumo Estimado Mensual:</b> {openRow.consumo_estimado_mensual} KW
+                        </p>
+                        <p className="mt-2">{openRow.analisis_text}</p>
+                        <div className="flex w-full justify-center items-center gap-2">
+                            <button onClick={()=>{setLoading(true)}}
+                            className="mt-4 px-4 py-2 cursor-pointer bg-[#06D001] text-white text-center rounded-md">
+                                Recomendaciones
+                            </button>
+                            <button onClick={() => setOpen(false)} className="mt-4 px-4 py-2 cursor-pointer border-red-500 border-2 text-black rounded-md hover:text-white hover:bg-red-500">
+                                Cerrar
+                            </button>
+                        </div>
+                    </div>
+                )}
+                {isLoading && (
+                    <div className="bg-[#FBFFE4] p-6 rounded-lg shadow-lg w-[50%] flex justify-center">
+                        <h2>Loading...</h2>
+                    </div>
+                )}
             </div>
         )}
         </div>
