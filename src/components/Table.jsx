@@ -6,24 +6,13 @@ const [tableData, setTable] = useState([]);
 const [currentRoom, setRoom] = useState(0);
 const [isOpen, setOpen] = useState(false);
 const [openRow, setRow] = useState(null);
-const [toggles, setToggles] = useState({});
-const [togglesInitialized, setTogglesInitialized] = useState(false);
+const [toggles, setToggles] = useState([true,true,true,true,true,true,true,true,true,true,false]);
 const url = "https://nxnsmxw7-8000.usw3.devtunnels.ms/";
 
 const fetchData = async () => {
 try {
     const response = await axios.get(`${url}articles/`);
     setTable(response.data);
-
-    if (!togglesInitialized) {
-    const initialToggles = {};
-    response.data.forEach((element) => {
-        initialToggles[element.id] = true;
-    });
-    setToggles(initialToggles);
-    setTogglesInitialized(true);
-    console.log("Toggles initialized:", initialToggles);
-    }
 } catch (error) {
     console.error("Error fetching data: ", error);
 }
@@ -110,21 +99,21 @@ return (
                     openModal(row);
                 }}
                 key={index}
-                className="border-1 border-[#8cc18b] hover:bg-[#E1F060]"
+                className={`border-1 border-[#8cc18b] ${toggles[row.id] ? 'hover:bg-[#E1F060]' : 'bg-[#D1D1D1]'}`}
                 >
-                <td className="py-1 text-center">{toggles[row.id] ? row.id + 1 : ""}</td>
+                <td className="py-1 text-center">{row.id + 1}</td>
                 <td className="py-1 text-center">{row.name}</td>
                 <td
                     className={`py-1 text-center font-bold ${row.consumo_actual < 21 ? "text-[#059212]" : ""} ${row.consumo_actual > 40 ? "text-[#FE4F2D]" : ""}`}
                 >
-                    {row.consumo_actual}
+                    {toggles[row.id] && row.consumo_actual}
                 </td>
                 <td
                     className={`py-1 text-center font-bold ${row.consumo_estimado_mensual < 75 ? "text-[#059212]" : ""} ${row.consumo_estimado_mensual > 141 ? "text-[#FE4F2D]" : ""}`}
                 >
-                    {row.consumo_estimado_mensual}
+                    {toggles[row.id] && row.consumo_estimado_mensual}
                 </td>
-                <td className={`py-1 text-center`}>{row.analisis_emoji}</td>
+                <td className={`py-1 text-center`}>{toggles[row.id] && row.analisis_emoji}</td>
                 <td className="py-1 text-center">
                     <button
                     onClick={(e) => {
