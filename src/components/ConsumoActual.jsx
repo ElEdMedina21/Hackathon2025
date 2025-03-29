@@ -64,15 +64,15 @@ const ConsumoActual = () => {
       min: yMin,
       max: yMax,
     },
-    legend: { show: false },
+    legend: {
+      show: false,
+    },
     series: [{ data }],
   };
 
   return (
-    <div className="flex justify-center items-center p-4">
-      <div className="w-full max-w-md h-80 bg-white shadow-md rounded-lg p-4">
-        <Chart options={options} series={options.series} type="line" />
-      </div>
+    <div>
+      <Chart options={options} series={options.series} type="line" />
     </div>
   );
 };

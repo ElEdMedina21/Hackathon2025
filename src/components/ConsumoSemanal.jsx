@@ -71,10 +71,8 @@ const ConsumoSemanal = () => {
     };
 
     return (
-        <div className="flex justify-center items-center p-4">
-            <div className="w-full max-w-md h-80 bg-white shadow-md rounded-lg p-4">
-                <Bar data={chartData} options={options} />
-            </div>
+        <div>
+            <Bar data={chartData} options={options} />
         </div>
     );
 };

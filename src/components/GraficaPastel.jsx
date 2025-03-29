@@ -56,8 +56,10 @@ const GraficaPastel = () => {
     };
 
     return (
-        <div>
-            <Doughnut data={chartData} options={options} />
+        <div className="flex justify-center items-center p-4">
+            <div className="w-96 h-96">
+                <Doughnut data={chartData} options={options} />
+            </div>
         </div>
     );
 };
