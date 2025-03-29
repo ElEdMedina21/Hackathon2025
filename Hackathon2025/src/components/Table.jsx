@@ -99,7 +99,7 @@ export default function Table(){
                                         `}>{row.consumo_estimado_mensual}</td>
                                     
                                         <td className={`w-[15%] py-1 text-center`}>
-                                            ✅
+                                            {row.analisis_emoji}
                                         </td>
 
                                     </tr>
@@ -108,19 +108,21 @@ export default function Table(){
                         </table>
                         {isOpen && openRow && (
                             <div className="fixed inset-0 flex items-center justify-center bg-black/75">
-                            <div className="bg-[#FBFFE4] p-6 rounded-lg shadow-lg w-96">
-                            <h2 className="text-xl font-bold">{openRow.name}</h2>
-                            <p className="mt-2 text-gray-600">Consumo Actual: {openRow.consumo_actual} KW</p>
-                            <p className="text-gray-600">Consumo Estimado Mensual: {openRow.consumo_estimado_mensual} KW</p>
-
-                            <div className="flex w-full justify-center items-center">
-                                <button
-                                    onClick={() => setOpen(false)}
-                                    className="mt-4 px-4 py-2 bg-red-500 text-white rounded-md"
-                                >
-                                    Cerrar
-                                </button>
-                            </div>
+                            <div className="bg-[#FBFFE4] p-6 rounded-lg shadow-lg w-[50%]">
+                                <h2 className="text-xl font-bold text-center">{openRow.name}</h2>
+                                <p className="mt-2 text-gray-600"><b>Consumo Actual:</b> {openRow.consumo_actual} KW</p>
+                                <p className="text-gray-600"><b>Consumo Estimado Mensual:</b> {openRow.consumo_estimado_mensual} KW</p>
+                                <p className="mt-2">
+                                    {openRow.analisis_text}
+                                </p>
+                                <div className="flex w-full justify-center items-center">
+                                    <button
+                                        onClick={() => setOpen(false)}
+                                        className="mt-4 px-4 py-2 cursor-pointer bg-red-500 text-white rounded-md hover:bg-red-700"
+                                    >
+                                        Cerrar
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         )}
