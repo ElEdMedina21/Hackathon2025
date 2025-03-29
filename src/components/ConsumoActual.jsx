@@ -3,7 +3,7 @@ import Chart from "react-apexcharts";
 
 const ConsumoActual = () => {
   const XAXISRANGE = 20000;
-  const API_URL = "https://nxnsmxw7-8000.usw3.devtunnels.ms/article_consume/";
+  const API_URL = "http://34.234.96.17/article_consume/";
   const dataRef = useRef([]);
   const [data, setData] = useState([]);
   const [yMin, setYMin] = useState(0);

@@ -6,13 +6,10 @@ import Home from './components/Home';
 import './background.css'; // Importa el CSS que define las clases .bg, .bg2 y .bg3
 
 function App() {
-  // Comprueba en sessionStorage si ya se mostró la landing.
-  const [showLanding, setShowLanding] = useState(() => {
-    return !sessionStorage.getItem('landingShown');
-  });
+  // Se establece el estado inicial para que siempre se muestre la landing.
+  const [showLanding, setShowLanding] = useState(true);
 
   const handleEnter = () => {
-    sessionStorage.setItem('landingShown', 'true');
     setShowLanding(false);
   };
 

@@ -12,7 +12,7 @@ const ConsumoSemanal = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await axios.get("https://nxnsmxw7-8000.usw3.devtunnels.ms/week_article_consume/");
+            const response = await axios.get("http://34.234.96.17/week_article_consume/");
             console.log("API Response:", response.data);
 
             const dataObject = response.data.data;

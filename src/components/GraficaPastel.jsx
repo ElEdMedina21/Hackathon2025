@@ -12,7 +12,7 @@ const GraficaPastel = () => {
 
     const fetchData = useCallback(async () => {
         try {
-            const response = await axios.get("https://nxnsmxw7-8000.usw3.devtunnels.ms/pie_article_consume/");
+            const response = await axios.get("http://34.234.96.17/pie_article_consume/");
             console.log("API Response:", response.data);
 
             const dispositivos = response.data;

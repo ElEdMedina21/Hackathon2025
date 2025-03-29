@@ -12,10 +12,9 @@ export default function NavBar() {
             <div className="flex gap-6">
                 {[
                     { label: "General", path: "/" },
-                    { label: "Planear", path: "/" },
                     { label: "Configurar", path: "/config" }
                 ].map(({ label, path }, index) => (
-                    <button 
+                    <button
                         key={index}
                         onClick={() => nav(path)}
                         className="px-5 py-2 text-lg font-semibold text-[#059212] bg-white rounded-full shadow 
