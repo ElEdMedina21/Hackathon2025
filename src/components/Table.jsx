@@ -121,7 +121,7 @@ return (
                         handleToggle(row.id);
                     }}
                     >
-                    Toggle
+                    {toggles[row.id] ? 'ON' : 'OFF'}
                     </button>
                 </td>
                 </tr>
